@@ -1,6 +1,7 @@
 #esqueleto de grid search
 #se espera que los alumnos completen lo que falta para recorrer TODOS cuatro los hiperparametros 
 
+
 rm( list=ls() )  #Borro todos los objetos
 gc()   #Garbage Collection
 
@@ -8,7 +9,11 @@ require("data.table")
 require("rpart")
 require("parallel")
 
-ksemillas  <- c(102191, 200177, 410551, 552581, 892237) #reemplazar por las propias semillas
+print(paste0("Hora inicio", Sys.time()))
+
+ ksemillas  <- c(308803,672823,727687,773987,954971) #reemplazar por las propias semillas
+# ksemillas  <- c(308802,672824,727688,773986,954974) #reemplazar por las propias semillas
+
 
 #------------------------------------------------------------------------------
 #particionar agrega una columna llamada fold a un dataset que consiste en una particion estratificada segun agrupa
@@ -75,7 +80,7 @@ ArbolesMontecarlo  <- function( semillas, param_basicos )
 #------------------------------------------------------------------------------
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("X:\\gdrive\\austral2023v\\")   #Establezco el Working Directory
+setwd("G:\\anita\\Austral\\Primer_Anio\\LaboratorioDeImplementacion1\\Practicos\\")  #Establezco el Working Directory
 #cargo los datos
 
 #cargo los datos
@@ -96,22 +101,36 @@ archivo_salida  <- "./exp/HT2020/gridsearch.txt"
 #la forma que no suceda lo anterior es con append=TRUE
 cat( file=archivo_salida,
      sep= "",
+     "cp","\t",
      "max_depth", "\t",
      "min_split", "\t",
+     "min_bucket", "\t", 
      "ganancia_promedio", "\n")
 
 
 #itero por los loops anidados para cada hiperparametro
-
-for( vmax_depth  in  c( 4, 6, 8, 10, 12, 14 )  )
+#for(vcp in c(-0.5,0,0.1))
+for(vcp in c(-0.5))
 {
-for( vmin_split  in  c( 1000, 800, 600, 400, 200, 100, 50, 20, 10 )  )
+#for( vmax_depth  in  c( 4, 6, 8, 10, 12, 14 )  )
+  for( vmax_depth  in  c(  6, 8 )  )  
 {
-
+#for( vmin_split  in  c( 1000, 800, 600, 400, 200, 100, 50, 20, 10 )  )
+for( vmin_split  in  c( 800,900,950,1000 )  )    
+{
+#for(vmin_bucket in c(2,4,8,16,32,vmin_split/4))
+  for(vmin_bucket in c(150,200,250))
+{
+  
+  print(paste0("vcp: ", vcp))
+  print(paste0("max_depth: ", vmax_depth))
+  print(paste0("min_split: ", vmin_split))
+  print(paste0("min_bucket: ", vmin_bucket))
+  
   #notar como se agrega
-  param_basicos  <- list( "cp"=         -0.5,       #complejidad minima
+  param_basicos  <- list( "cp"=         vcp,       #complejidad minima
                           "minsplit"=  vmin_split,  #minima cantidad de registros en un nodo para hacer el split
-                          "minbucket"=  5,          #minima cantidad de registros en una hoja
+                          "minbucket"=  vmin_bucket,          #minima cantidad de registros en una hoja
                           "maxdepth"=  vmax_depth ) #profundidad máxima del arbol
 
   #Un solo llamado, con la semilla 17
@@ -121,9 +140,15 @@ for( vmin_split  in  c( 1000, 800, 600, 400, 200, 100, 50, 20, 10 )  )
   cat(  file=archivo_salida,
         append= TRUE,
         sep= "",
+        vcp, "\t",
         vmax_depth, "\t",
         vmin_split, "\t",
+        vmin_bucket, "\t", 
         ganancia_promedio, "\n"  )
 
 }
 }
+}
+}
+
+print(paste0("Hora Fin", Sys.time()))
