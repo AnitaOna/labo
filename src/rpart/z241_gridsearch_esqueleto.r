@@ -11,9 +11,7 @@ require("parallel")
 
 print(paste0("Hora inicio", Sys.time()))
 
- ksemillas  <- c(308803,672823,727687,773987,954971) #reemplazar por las propias semillas
-# ksemillas  <- c(308802,672824,727688,773986,954974) #reemplazar por las propias semillas
-
+ksemillas  <- c(308803,672823,727687,773987,954971) #reemplazar por las propias semillas
 
 #------------------------------------------------------------------------------
 #particionar agrega una columna llamada fold a un dataset que consiste en una particion estratificada segun agrupa
