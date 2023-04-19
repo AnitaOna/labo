@@ -11,7 +11,9 @@ require("parallel")
 
 print(paste0("Hora inicio", Sys.time()))
 
-ksemillas  <- c(308803,672823,727687,773987,954971) #reemplazar por las propias semillas
+ ksemillas  <- c(308803,672823,727687,773987,954971) #reemplazar por las propias semillas
+# ksemillas  <- c(308802,672824,727688,773986,954974) #reemplazar por las propias semillas
+
 
 #------------------------------------------------------------------------------
 #particionar agrega una columna llamada fold a un dataset que consiste en una particion estratificada segun agrupa
@@ -31,7 +33,7 @@ particionar  <- function( data,  division, agrupa="",  campo="fold", start=1, se
 ArbolEstimarGanancia  <- function( semilla, param_basicos )
 {
   #particiono estratificadamente el dataset
-  particionar( dataset, division=c(7,3), agrupa="clase_ternaria", seed= semilla )
+  particionar( dataset, division=c(7,3), agrupa="clase_ternaria", seed= semilla )  #Cambiar por la primer semilla de cada uno !
 
   #genero el modelo
   modelo  <- rpart("clase_ternaria ~ .",     #quiero predecir clase_ternaria a partir del resto
@@ -114,10 +116,10 @@ for(vcp in c(-0.5))
   for( vmax_depth  in  c(  6, 8 )  )  
 {
 #for( vmin_split  in  c( 1000, 800, 600, 400, 200, 100, 50, 20, 10 )  )
-for( vmin_split  in  c( 800,900,950,1000 )  )    
+for( vmin_split  in  c( 950,1000 )  )    
 {
 #for(vmin_bucket in c(2,4,8,16,32,vmin_split/4))
-  for(vmin_bucket in c(150,200,250))
+  for(vmin_bucket in c(150,200))
 {
   
   print(paste0("vcp: ", vcp))

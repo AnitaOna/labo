@@ -12,12 +12,13 @@ require("rpart")
 #parmatros experimento
 PARAM <- list()
 PARAM$experimento  <- 3210
-PARAM$semilla  <- 102191      #Establezco la semilla aleatoria, cambiar por SU primer semilla
+PARAM$semilla  <- 308803      #Establezco la semilla aleatoria, cambiar por SU primer semilla
 
+vminsplit=250
 #parameetros rpart
 PARAM$rpart_param   <- list( "cp"=          -1,
-                              "minsplit"=  300,
-                              "minbucket"=  20,
+                              "minsplit"=  vminsplit,
+                              "minbucket"=  50,
                               "maxdepth"=   10 )
 
 #parametros  arbol
@@ -29,7 +30,7 @@ PARAM$num_trees_max  <- 500 #voy a generar 500 arboles, a mas arboles mas tiempo
 #------------------------------------------------------------------------------
 #Aqui comienza el programa
 
-setwd("X:\\gdrive\\austral2023v\\")  #Establezco el Working Directory
+setwd("G:\\anita\\Austral\\Primer_Anio\\LaboratorioDeImplementacion1\\Practicos\\")  #Establezco el Working Directory
 
 #cargo los datos
 dataset  <- fread("./datasets/dataset_pequeno.csv")
@@ -37,15 +38,19 @@ dataset  <- fread("./datasets/dataset_pequeno.csv")
 
 #creo la carpeta donde va el experimento
 dir.create( "./exp/", showWarnings = FALSE  )
-carpeta_experimento  <-  paste0( "./exp/KA", PARAM$experimento, "/")
-dir.create( paste0( "./exp/KA", PARAM$experimento, "/"), 
-            showWarnings = FALSE )
+
+#carpeta_experimento  <-  paste0( "./exp/KA", PARAM$experimento, "/")
+#dir.create( paste0( "./exp/KA", PARAM$experimento, "/"), 
+#            showWarnings = FALSE )
+
+carpeta_experimento  <- paste0( "./exp/KA", PARAM$experimento,"_MinSplit_",vminsplit, "/")
+dir.create( carpeta_experimento,showWarnings = FALSE )
 
 setwd( carpeta_experimento )
 
-
 #que tamanos de ensemble grabo a disco, pero siempre debo generar los 500
 grabar  <-  c( 1, 5, 10, 50, 100, 200, 500)
+#grabar  <-  c( 20)
 
 
 #defino los dataset de entrenamiento y aplicacion
