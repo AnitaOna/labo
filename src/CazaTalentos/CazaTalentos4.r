@@ -12,16 +12,14 @@ ftirar  <- function( prob, qty ){
 
 #defino los jugadores
 mejor      <- 0.7
-peloton    <- ( 501:599 ) / 1000
+peloton    <- ( 501:549 ) / 1000
 jugadores  <- c( mejor, peloton )
 
 #veo que tiene el vector
 jugadores
 
 
-
-
-#hago que los 100 jugadores tiren 10 veces cada uno
+#hago que los 60 jugadores tiren 10 veces cada uno
 mapply( ftirar, jugadores, 10 )
 
 primero_ganador  <- 0

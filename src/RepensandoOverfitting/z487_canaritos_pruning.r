@@ -6,7 +6,7 @@ require("data.table")
 require("rpart")
 require("rpart.plot")
 
-setwd("X:\\gdrive\\austral2023v\\" )  #establezco la carpeta donde voy a trabajar
+setwd("G:\\anita\\Austral\\Primer_Anio\\LaboratorioDeImplementacion1\\Practicos" )  #establezco la carpeta donde voy a trabajar
 
 #cargo el dataset
 dataset  <- fread( "./datasets/dataset_pequeno.csv")
@@ -17,7 +17,7 @@ setwd( "./exp/EA4870" )
 
 
 #uso esta semilla para los canaritos
-set.seed(102191)
+set.seed(308803)
 
 # agrego tantos canaritos como variables tiene el dataset
 for( i in 1:ncol(dataset) )  dataset[ , paste0("canarito", i ) :=  runif( nrow(dataset)) ]
@@ -58,3 +58,6 @@ pdf(file = "stopping_at_canaritos.pdf", width=28, height=4)
 prp(modelo_pruned, extra=101, digits=-5, branch=1, type=4, varlen=0, faclen=0)
 dev.off()
 
+pdf(file = "arbol_Original.pdf", width=40, height=20)
+prp(modelo_original, extra=101, digits=-5, branch=1, type=4, varlen=0, faclen=0)
+dev.off()
