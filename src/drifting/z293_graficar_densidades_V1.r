@@ -15,13 +15,13 @@ graficar_campo  <- function( campo )
 {
 
   #quito de grafico las colas del 5% de las densidades
-  qA  <- quantile(  dataset[ foto_mes==202107 , get(campo) ] , prob= c(0.05, 0.95), na.rm=TRUE )
+  qA  <- quantile(  dataset[ foto_mes==202108 , get(campo) ] , prob= c(0.05, 0.95), na.rm=TRUE )
   qB  <- quantile(  dataset[ foto_mes==202109 , get(campo) ] , prob= c(0.05, 0.95), na.rm=TRUE )
 
   xxmin  <- pmin( qA[[1]], qB[[1]] )
   xxmax  <- pmax( qA[[2]], qB[[2]] )
 
-  densidad_A  <- density( dataset[ foto_mes==202107, get(campo) ],
+  densidad_A  <- density( dataset[ foto_mes==202108, get(campo) ],
                           kernel="gaussian", na.rm=TRUE )
 
   densidad_B  <- density( dataset[ foto_mes==202109, get(campo) ],
@@ -37,7 +37,7 @@ graficar_campo  <- function( campo )
   lines(densidad_B, col="red", lty=2)
   
   legend(  "topright",  
-           legend=c("202107", "202109"),
+           legend=c("202108", "202109"),
            col=c("blue", "red"), lty=c(1,2))
 
 }
@@ -47,6 +47,7 @@ setwd("~/buckets/b1/")   #Establezco el Working Directory
 
 #cargo el dataset donde voy a entrenar
 dataset  <- fread( "./datasets/competencia_2023.csv.gz")
+
 
 dir.create( "./exp/",  showWarnings = FALSE ) 
 dir.create( "./exp/DR2930/", showWarnings = FALSE )
